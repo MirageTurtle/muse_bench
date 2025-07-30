@@ -139,6 +139,10 @@ def get_args():
             args.positive_data_file is not None
         ), "DPO selected. Positive data file required."
 
+    if args.tokenizer_dir is None:
+        # If tokenizer_dir is not provided, use model_dir
+        args.tokenizer_dir = args.model_dir
+
     return args
 
 
