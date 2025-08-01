@@ -158,7 +158,7 @@ class ForgetRetainDataset(DefaultDataset):
 
     def get_collate_fn(self):
 
-        def collate_fn(batch: List[Tuple[torch.Tensor, torch.Tensor]]):
+        def collate_fn(batch: List[Tuple[torch.Tensor, torch.Tensor, torch.Tensor]]):
             batch_forget = torch.stack([pair[0] for pair in batch])
             dict_forget = {
                 "input_ids": batch_forget,
@@ -176,6 +176,15 @@ class ForgetRetainDataset(DefaultDataset):
             else:
                 dict_retain = None
 
-            return dict_forget, dict_retain
+            dict_positive = None
+            if self.positive_exists:
+                batch_positive = torch.stack([pair[2] for pair in batch])
+                dict_positive = {
+                    "input_ids": batch_positive,
+                    "labels": batch_positive.clone(),
+                    "attention_mask": torch.ones_like(batch_positive, dtype=torch.bool),
+                }
+
+            return dict_forget, dict_retain, dict_positive
 
         return collate_fn
