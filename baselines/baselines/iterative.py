@@ -91,7 +91,7 @@ class IterativeUnlearner(Trainer):
 
         super().__init__(*args, **kwargs)
 
-    def compute_loss(self, model, x, return_outputs=False):
+    def compute_loss(self, model, x, return_outputs=False, num_items_in_batch=None):
         """Source: https://github.com/licong-lin/negative-preference-optimization/blob/main/synthetic/mymodel.py"""
 
         ### 1. Run model ###
