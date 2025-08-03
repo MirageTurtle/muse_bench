@@ -26,11 +26,17 @@ def unlearn(
         assert (
             retain_data_file is not None
         ), "Retain data must be specified for grad_diff."
+    if "dpo" in loss_type:
+        assert (
+            positive_data_file is not None
+        ), "Positive data must be specified for dpo."
 
     model, tokenizer = load_model_and_tokenizer(model_dir, tokenizer_dir=tokenizer_dir)
 
     ref_model = (
-        load_model(model_dir) if "npo" in loss_type or "kl" in loss_type else None
+        load_model(model_dir)
+        if "npo" in loss_type or "kl" in loss_type or "dpo" in loss_type
+        else None
     )
 
     dataset = ForgetRetainDataset(
