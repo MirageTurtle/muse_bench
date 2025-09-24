@@ -176,7 +176,7 @@ def load_then_eval_models(
     # Run evaluation
     out = []
     for model_dir, name in zip(model_dirs, names):
-        model = load_model(model_dir)
+        model = load_model(model_dir, torch_dtype="auto", device_map="auto")
         tokenizer = load_tokenizer(tokenizer_dir)
         res = eval_model(
             model, tokenizer, metrics, corpus, temp_dir=os.path.join(temp_dir, name)
