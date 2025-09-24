@@ -198,4 +198,4 @@ if __name__ == "__main__":
     parser.add_argument("--out_file", type=str, required=True)
     parser.add_argument("--metrics", type=str, nargs="+", default=SUPPORTED_METRICS)
     args = parser.parse_args()
-    load_then_eval_models(**args)
+    load_then_eval_models(**vars(args))
